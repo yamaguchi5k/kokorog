@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ココログ</title>
+    <style></style>
+</head>
+<body>
+    <!-- ログイン画面 -->
+    <div id="loginScreen">
+        <h2>お名前を選んでください</h2>
+        <select id="userSelect"></select>
+        <button onclick="showScreen('registerScreen')">新規登録</button>
+        <div id="loginMsg" style="color: red;"></div>
+    </div>
+    
+    <!-- 新規登録画面 -->
+    <div id="registerScreen" style="display: none;"></div>
+        <h2>新規登録</h2>
+        <input type="text" id="newUserName" placeholder="名前を入力">
+        <button onclick="registerUser()">登録</button>
+        <button onclick="showScreen('loginScreen')">戻る</button>
+    <!-- 記録画面 -->
+    <div id="recordScreen" style="display: none;"></div>
+    <!-- 過去の記録画面 -->
+    <div id="historyScreen" style="display: none;"></div>
+    <!-- 案内ページ -->
+     <div id="infoScreen" style="display: none;"></div>
+
+    <script>
+        function refreshUserList() {
+            const userList = JSON.parse(localStorage.getItem("userList")) || [];
+            const container = document.getElementById("userButtonList");
+            container.innerHTML = "";
+            userList.forEach(name => {
+                // ユーザーボタン
+                const btn = document.createElement("button");
+                btn.textContent = name;
+                btn.style.margin = "4px";
+                btn.onclick = function() { loginWithUser(name)};
+                container.appendChild(btn);
+
+                // 削除ボタン
+                const del = document.createElement("button")
+                del.textContent = "🗑";
+                del.title = name + "を削除";
+                del.style,margin = "4px";
+                del.onclick = function(e) {
+                    e.stopPropagation(); // ログインボタンが動作しないように
+                    if (confirm(`${name}を削除しますか？ (記録もすべて消えます) `)) {
+                        deleteUser(name);
+                    }
+                };
+                container.appendChild(del);
+            });
+        }
+
+        function loginWithUser(name) {
+            currentUser = name;
+            alert(currentUser + "さんでログインしました");
+            // ここでホームスクリーンに切り替え予定
+        }
+    </script>
+
+
+</body>
+</html>
