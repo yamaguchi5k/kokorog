@@ -4,65 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ココログ</title>
-    <style></style>
+    <script src="kokorog.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>ココログ</h1>
+    </header>
+
     <!-- ログイン画面 -->
     <div id="loginScreen">
-        <h2>お名前を選んでください</h2>
-        <select id="userSelect"></select>
+        <h2>ココログへようこそ</h2>
+        <p>あなたのペースで、体調やできたことを残してみませんか？</p>
+
+        <h3>自分の名前を選んでね</h3>
+        <div id="userButtonList"></div>
+
+        <p>新規登録はこちら</p>
         <button onclick="showScreen('registerScreen')">新規登録</button>
-        <div id="loginMsg" style="color: red;"></div>
+    </div>
+
+
+    <!-- ログイン確認画面 -->
+    <div id="loginCheckScreen" style="display: none;">
+        <p><span id="checkLoginUser"></span>さんでログインしますか？</p>
+        <button onclick="moveToHome()">OK</button>
+        <br>
+        <button onclick="showScreen('loginScreen')">戻る</button>
+    </div>
+
+
+    <!-- 新規登録画面 -->
+    <div id="registerScreen" style="display: none;">
+        <h2>新規登録</h2>
+        <p>登録したいお名前を入力してください</p>
+        <input type="text" id="newUserName" placeholder="名前を入力">
+        <br>
+        <button onclick="registerUser()">登録</button>
+        <div id="registerMsg"></div>
+    </div>
+
+
+    <!-- 登録完了画面 -->
+    <div id="registerCompleteScreen" style="display: none;">
+        <h2>登録が完了しました！</h2>
+        <p>ホーム画面から記録を残してみましょう</p>
+        <button onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
     </div>
     
-    <!-- 新規登録画面 -->
-    <div id="registerScreen" style="display: none;"></div>
-        <h2>新規登録</h2>
-        <input type="text" id="newUserName" placeholder="名前を入力">
-        <button onclick="registerUser()">登録</button>
-        <button onclick="showScreen('loginScreen')">戻る</button>
-    <!-- 記録画面 -->
-    <div id="recordScreen" style="display: none;"></div>
-    <!-- 過去の記録画面 -->
-    <div id="historyScreen" style="display: none;"></div>
-    <!-- 案内ページ -->
-     <div id="infoScreen" style="display: none;"></div>
 
-    <script>
-        function refreshUserList() {
-            const userList = JSON.parse(localStorage.getItem("userList")) || [];
-            const container = document.getElementById("userButtonList");
-            container.innerHTML = "";
-            userList.forEach(name => {
-                // ユーザーボタン
-                const btn = document.createElement("button");
-                btn.textContent = name;
-                btn.style.margin = "4px";
-                btn.onclick = function() { loginWithUser(name)};
-                container.appendChild(btn);
+    <!-- ホーム画面 -->
+     <div id="homeScreen" style="display: none;">
+        <h2><span id="userWelcome"></span>さん、ようこそ</h2>
+        <div id="homeList">
+            <button onclick="showScreen('recordScreen')">記録する</button>
+            <button onclick="showScreen('pastRecordScreen')">過去の記録を見る</button>
+            <button onclick="showScreen('helpScreen')">操作確認</button>
+        </div>
+     </div>
 
-                // 削除ボタン
-                const del = document.createElement("button")
-                del.textContent = "🗑";
-                del.title = name + "を削除";
-                del.style,margin = "4px";
-                del.onclick = function(e) {
-                    e.stopPropagation(); // ログインボタンが動作しないように
-                    if (confirm(`${name}を削除しますか？ (記録もすべて消えます) `)) {
-                        deleteUser(name);
-                    }
-                };
-                container.appendChild(del);
-            });
-        }
-
-        function loginWithUser(name) {
-            currentUser = name;
-            alert(currentUser + "さんでログインしました");
-            // ここでホームスクリーンに切り替え予定
-        }
-    </script>
-
-
+    <footer>
+        <p>&copy;kokorog 2025 </p>
+    </footer>
 </body>
 </html>
