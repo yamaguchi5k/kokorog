@@ -103,7 +103,7 @@ function moveToHome() {
 // 記録画面処理
 let selectedMood = ""; // 選ばれた気分を一時的に保存
 
-function selectMood(elem, mood) {
+function selectMood(elem, mood, moodImage) {
     document.querySelectorAll('.mood-icon').forEach(icon => {
         icon.classList.remove('selected');
     });
@@ -111,6 +111,7 @@ function selectMood(elem, mood) {
     elem.classList.add('selected');
     // 選ばれたマークを変数に保存
     selectedMood = mood;
+    selectedMoodImage = moodImage;
     document.getElementById("selectedMoodDisplay").textContent = "選択中の気分: " + mood;
 }
 
@@ -129,6 +130,7 @@ function saveRecord() {
         user: currentUser,
         date: new Date().toLocaleString(),
         mood: selectedMood,
+        moodImage: selectedMoodImage,
         memo: memo
     };
 
@@ -160,13 +162,15 @@ function closePopup() {
 
 
 // 過去の記録画面
+let deleteTargetIdx = null; // 削除対象インデックスを記録
+
 function showPastRecords() {
     // 表示画面切り替え
     showScreen('pastRecordScreen');
     // 記録データを取得＆自分の分だけに絞る
     const allRecords = JSON.parse(localStorage.getItem("records")) || [];
     // 新しい順で、currentUserの分だけ抽出
-    const records = allRecords.filter(r => r.user === currentUser).reverse();
+    const records = allRecords.map((r, idx) => ({...r, index: idx})).filter(r => r.user === currentUser).reverse();
 
     // 一覧を表示
     const list = document.getElementById("recordList");
@@ -182,12 +186,29 @@ function showPastRecords() {
         const card = document.createElement("div");
         card.className = "record-card";
 
+        // 編集状態判定
+        let editing = record.editing;
+
+        // 気分クラス
+        let moodClass = '';
+        if (record.mood === 'にっこり' || record.mood === 'smile.png') moodClass = 'mood-smile';
+        else if (record.mood === 'ふつう' || record.mood === 'neutral.png') moodClass = 'mood-neutral';
+        else if (record.mood = 'しょんぼり' || record.mood === 'sad.png') moodClass = 'mood-sad';
+
         // ヘッダー (日付＋気分マーク)
         const header = document.createElement("div");
         header.className = "record-card-header";
         header.innerHTML = `
             <span class="record-card-date">${record.date}</span>
-            <span class="record-card-mood">${record.mood}</span>
+            <span class="mood-bg ${moodClass}">
+                ${record.moodImage
+                    ? `<img src="images/${record.moodImage}" alt="${record.mood}" class="record-card-mood ${moodClass}" style="width:28px; height:28px; vertical-align:middle;">` 
+                    : `<span class="record-card-mood ${moodClass}">${record.mood}<span>`
+                }
+            </span>
+            <button class="icon-btn" onclick="openDeletePopup(${record.index})" title="削除">
+！！！！！！！！！ここから！！！！！！！！！！！！！！！！
+                <img src="">
             `;
 
             // 区切り線
