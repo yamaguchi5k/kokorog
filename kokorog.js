@@ -8,7 +8,7 @@ function showScreen(screenId) {
         'loginCheckScreen',
         'recordScreen',
         'pastRecordScreen',
-        // 'helpScreen'
+        'helpScreen'
     ];
     // すべての画面をいったん非表示
     screens.forEach(id => {
@@ -41,6 +41,7 @@ function refreshUserList() {
         // ボタンを新しく作る
         const btn = document.createElement("button");
         btn.textContent = name;
+        btn.className = "app-btn";
         btn.onclick = function() { loginWithUser(name); };
         // 作ったボタンをログイン画面のdivに追加する
         container.appendChild(btn);
@@ -75,6 +76,7 @@ function registerUser() {
     document.getElementById("newUserName").value = "";
     document.getElementById(`registerMsg`).textContent = ""; // メッセージを消す
 
+    localStorage.setItem("showHelp", "yes"); // 初回登録フラグを保存
     showScreen('registerCompleteScreen'); // ログイン完了画面に移動
 }
 
@@ -207,25 +209,87 @@ function showPastRecords() {
                 }
             </span>
             <button class="icon-btn" onclick="openDeletePopup(${record.index})" title="削除">
-！！！！！！！！！ここから！！！！！！！！！！！！！！！！
-                <img src="">
+                <img src="images/trashbox.png" alt="削除">
+            </button>
+            <button class="icon-btn" onclick="editRecord(${record.index})" title="編集">
+                <img src="images/pencil.png" alt="編集">
+            </button>
             `;
 
             // 区切り線
             const divider = document.createElement("div");
             divider.className = "record-card-divider";
 
-            // メモ
+            // メモ (編集状態ならtextarea)
             const memo = document.createElement("div");
             memo.className = "record-card-memo";
-            memo.textContent = record.memo || "";
+            memo.id = `memo-${record.index}`;
+            memo.innerHTML = editing
+                ? `<textarea id="editMemo-${record.index}" rows="3">${record.memo || ""}</textarea>
+                <button onclick="saveEditdRecord(${record.index})">保存</button>
+                <button onclick="cancelEdit(${record.index})">キャンセル</button>`
+                : (record.memo || "");
 
             // カードに追加
             card.appendChild(header);
             card.appendChild(divider);
             card.appendChild(memo);
-
             // 一覧に追加
             list.appendChild(card);
     });
+}
+
+// 削除ポップアップ操作
+function openDeletePopup(idx) {
+    deleteTargetIdx = idx;
+    document.getElementById('deletePopup').style.display = 'flex';
+    document.getElementById('confirmDeleteBtn').onclick = confirmDeleteRecord;
+}
+function closeDeletePopup() {
+    document.getElementById('deletePopup').style.display = 'none';
+    deleteTargetIdx = null;
+}
+function confirmDeleteRecord() {
+    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
+    allRecords.splice(deleteTargetIdx, 1);
+    localStorage.setItem("records", JSON.stringify(allRecords));
+    closeDeletePopup();
+    showPastRecords();
+}
+
+// 編集機能
+function editRecord(idx) {
+    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
+    if (allRecords[idx]) allRecords[idx].editing = true;
+    localStorage.setItem("records", JSON.stringify(allRecords));
+    showPastRecords();
+}
+function cancelEdit(idx) {
+    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
+    if (allRecords[idx]) delete allRecords[idx].editing;
+    localStorage.setItem("records", JSON.stringify(allRecords));
+    showPastRecords();
+}
+function saveEditdRecord(idx) {
+    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
+    const newMemo = document.getElementById(`editMemo-${idx}`).value;
+    if (allRecords[idx]) {
+        allRecords[idx].memo = newMemo;
+        delete allRecords[idx].editing;
+    }
+    localStorage.setItem("records", JSON.stringify(allRecords));
+    showPastRecords();
+}
+
+
+// 新規登録直後、フラグを保存
+function moveToHome() {
+    // 新規登録直後かどうかチェック
+    if (localStorage.getItem("showHelp") === "yes") {
+        showScreen('helpScreen');
+        localStorage.removeItem("showHelp"); // フラグを消す
+    } else {
+        showScreen('homeScreen');
+        showUserName(); // 名前表示
+    }
 }

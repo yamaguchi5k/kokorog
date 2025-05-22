@@ -1,6 +1,79 @@
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('fonts/ChilloutTYP-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.hometext {
+    margin-top: 100px;
+    text-align: center;
+}
+#userButtonList {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ボタンの中央寄せ */
+    gap: 8px; /* ボタン間の隙間 */
+}
+#loginScreen button {
+    margin: 8px 0;
+}
+
+
+/* ボタン設定 */
+.app-btn {
+    width: 220px;
+    height: 48px;
+    white-space: nowrap; /* 1行で表示 */
+    padding: 12px 0;
+    margin: 6px 0;
+    font-size: 1.1em;
+    color: #444;
+    background: #ffcf97;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 3px 12px rgba(255, 153, 51, 0.10), 0.2px 6px rgba(0, 0, 0, 0.06);
+    transition: 
+        background 0.15s,
+        box-shadow 0.1s,
+        transform 0.07s;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.03em;
+}
+/* ホバーで色と影が強調される */
+.app-btn:hover {
+    background: #ffae4d;
+    box-shadow: 0 2px 4px rgba(255, 153, 51, 0.24), 0.1px 3px rgba(0, 0, 0, 0.08);
+    transform: translateY(2px) scale(0.98);
+}
+/* クリック(押し込み)でさらに沈む */
+.app-btn:active {
+    background: #f99211;
+    box-shadow: 0 1px 2px rgba(255, 153, 51, 0.18), 0.1px 2px rgba(0, 0, 0, 0.10);
+    transform: translateY(4px) scale(0.96);
+}
+
+
+h1 {
+    font-size: 4em;
+    font-family: 'MyCustomFont', sans-serif;
+}
+
+
 #userButtonList button {
     display: block;
     margin-bottom: 8px;
+}
+
+
+#homeList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-top: 24px;
 }
 
 
@@ -130,3 +203,4 @@
     vertical-align: middle;
     pointer-events: none;
 }
+

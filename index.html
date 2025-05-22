@@ -16,75 +16,86 @@
     <div id="loginScreen">
         <h2>ココログへようこそ</h2>
         <p>あなたのペースで、体調やできたことを残してみませんか？</p>
+        <div class="hometext">
+            <h3>自分の名前を選んでね</h3>
+            <div id="userButtonList"></div>
 
-        <h3>自分の名前を選んでね</h3>
-        <div id="userButtonList"></div>
-
-        <p>新規登録はこちら</p>
-        <button onclick="showScreen('registerScreen')">新規登録</button>
+            <p>新規登録はこちら</p>
+            <button class="app-btn" onclick="showScreen('registerScreen')">新規登録</button>
+        </div>
     </div>
 
 
     <!-- ログイン確認画面 -->
     <div id="loginCheckScreen" style="display: none;">
-        <p><span id="checkLoginUser"></span>さんでログインしますか？</p>
-        <button onclick="moveToHome()">OK</button>
-        <br>
-        <button onclick="showScreen('loginScreen')">戻る</button>
+        <div class="hometext">
+            <p><span id="checkLoginUser"></span>さんでログインしますか？</p>
+            <button class="app-btn" onclick="moveToHome()">OK</button>
+            <br>
+            <button class="app-btn" onclick="showScreen('loginScreen')">戻る</button>
+        </div>
     </div>
 
 
     <!-- 新規登録画面 -->
     <div id="registerScreen" style="display: none;">
-        <h2>新規登録</h2>
-        <p>登録したいお名前を入力してください</p>
-        <input type="text" id="newUserName" placeholder="名前を入力">
-        <br>
-        <button onclick="registerUser()">登録</button>
-        <div id="registerMsg"></div>
+        <div class="hometext">
+            <h2>新規登録</h2>
+            <p>登録したいお名前を入力してください</p>
+            <input type="text" id="newUserName" placeholder="名前を入力">
+            <br>
+            <button class="app-btn" onclick="registerUser()">登録</button>
+            <div id="registerMsg"></div>
+        </div>
     </div>
 
 
     <!-- 登録完了画面 -->
     <div id="registerCompleteScreen" style="display: none;">
-        <h2>登録が完了しました！</h2>
-        <p>ホーム画面から記録を残してみましょう</p>
-        <button onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+        <div class="hometext">
+            <h2>登録が完了しました！</h2>
+            <p>ホーム画面から記録を残してみましょう</p>
+            <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+        </div>
     </div>
     
 
     <!-- ホーム画面 -->
     <div id="homeScreen" style="display: none;">
-        <h2><span id="userWelcomeHome"></span>さん、ようこそ</h2>
-        <div id="homeList">
-            <button onclick="showScreen('recordScreen')">記録する</button>
-            <button onclick="showPastRecords()">これまでの記録を見る</button>
-            <button onclick="showScreen('helpScreen')">操作確認</button>
-            <button onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+        <div class="hometext">
+            <h2><span id="userWelcomeHome"></span>さん、ようこそ</h2>
+            <div id="homeList">
+                <button class="app-btn" onclick="showScreen('recordScreen')">記録する</button>
+                <button class="app-btn" onclick="showPastRecords()">これまでの記録を見る</button>
+                <button class="app-btn" onclick="showScreen('helpScreen')">操作確認</button>
+                <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+            </div>
         </div>
     </div>
 
 
     <!-- 記録画面 -->
     <div id="recordScreen" style="display: none;">
-        <h2><span id="userWelcomeRecord"></span>さん、ようこそ</h2>
-        <p>今の体調や、できたことなどを記録に残してみましょう</p>
+        <div class="hometext">
+            <h2><span id="userWelcomeRecord"></span>さん、ようこそ</h2>
+            <p>今の体調や、できたことなどを記録に残してみましょう</p>
 
-        <p>今日の気分は？</p>
-        <div id="moodButtons" class="mood-select">
-            <img src="images/smile.png" alt="にっこり" onclick="selectMood(this, 'にっこり', 'smile.png')" class="mood-icon">
-            <img src="images/neutral.png" alt="ふつう" onclick="selectMood(this, 'ふつう', 'neutral.png')" class="mood-icon">
-            <img src="images/sad.png" alt="しょんぼり" onclick="selectMood(this, 'しょんぼり', 'sad.png')" class="mood-icon">
+            <p>今日の気分は？</p>
+            <div id="moodButtons" class="mood-select">
+                <img src="images/smile.png" alt="にっこり" onclick="selectMood(this, 'にっこり', 'smile.png')" class="mood-icon">
+                <img src="images/neutral.png" alt="ふつう" onclick="selectMood(this, 'ふつう', 'neutral.png')" class="mood-icon">
+                <img src="images/sad.png" alt="しょんぼり" onclick="selectMood(this, 'しょんぼり', 'sad.png')" class="mood-icon">
             <!-- <img src="images/smile.png" alt="にっこり" onclick="selectMood(this, '😊')" class="mood-icon">
             <img src="images/neutral.png" alt="ふつう" onclick="selectMood(this, '😐')" class="mood-icon">
             <img src="images/sad.png" alt="しょんぼり" onclick="selectMood(this, '😢')" class="mood-icon"> -->
-        </div>
+            </div>
 
-        <textarea id="recordMemo" name="memo" placeholder="メモやできたことなどを入力してね"></textarea>
-        <br><br>
-        <button onclick="saveRecord()">記録する</button>
-        <button onclick="showPastRecords()">これまでの記録を見る</button>
-        <button onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+            <textarea id="recordMemo" name="memo" placeholder="メモやできたことなどを入力してね"></textarea>
+            <br><br>
+            <button class="app-btn" onclick="saveRecord()">記録する</button>
+            <button class="app-btn" onclick="showPastRecords()">これまでの記録を見る</button>
+            <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+        </div>
     </div>
 
 
@@ -92,28 +103,55 @@
     <div id="customPopup" class="popup" style="display: none;">
         <div class="popup-content">
             <p>記録しました</p>
-            <button onclick="closePopup()">OK</button>
+            <button class="app-btn" onclick="closePopup()">OK</button>
         </div>
     </div>
 
 
     <!-- 過去の記録画面 -->
     <div id="pastRecordScreen" style="display: none;">
-        <h2><span id="userWelcomePast"></span>さんの記録</h2>
-        <div id="recordList"></div>
+        <div class="hometext">
+            <h2><span id="userWelcomePast"></span>さんの記録</h2>
+            <div id="recordList"></div>
         <!-- 編集確認ポップアップ -->
-         <div id="deletePopup" class="popup" style="display: none;">
-            <div class="popup-content">
-                <p>本当にこの記録を削除しますか？</p>
-                <button id="confirmDeleteBtn">削除する</button>
-                <button onclick="closeDeletePopup()">キャンセル</button>
+            <div id="deletePopup" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <p>本当にこの記録を削除しますか？</p>
+                    <button id="confirmDeleteBtn">削除する</button>
+                    <button onclick="closeDeletePopup()">キャンセル</button>
+                </div>
             </div>
-         </div>
-        <button onclick="showScreen('homeScreen')">ホーム画面へ戻る</button>
+            <button class="app-btn" onclick="showScreen('homeScreen')">ホーム画面へ戻る</button>
+        </div>
     </div>
 
 
     <!-- 操作方法画面 -->
+    <div id="helpScreen" style="display: none;">
+        <h2>ココログの使い方</h2>
+        <h3>ホーム画面の操作</h3>
+        <img src="ホーム画面のスクショ" alt="ホーム画面イメージ" style="width: 90%; max-width: 340px;">
+        <ul>
+            <li><b>記録する</b> … その日の気分やできたことを記録できます。</li>
+            <li><b>これまでの記録を見る</b> … これまでの記録一覧を見ることができます。</li>
+            <li><b>操作確認</b> … この画面 (使い方ガイド) をもう一度見ることができます。</li>
+        </ul>
+        <h3>過去の記録画面の操作</h3>
+        <img src="過去の記録画面のスクショ" alt="過去の記録画面イメージ" style="width: 90%; max-width: 340px;">
+        <p style="margin-left: 2em;">気分マーク・日付・記録内容が表示されます。</p>
+        <ul>
+            <li>
+                <img src="images/trashbox.png" alt="削除" style="width: 20px; vertical-align: middle;">削除ボタン … いらない記録を削除できます。
+            </li>
+            <li>
+                <img src="images/pencil.png" alt="編集" style="width: 20px; vertical-align: middle;">編集ボタン … その場で記録内容を書き直せます。
+            </li>
+        </ul>
+        <br>
+        <p style="margin-top: 1.5em;">データはこの端末だけに保存されます。他の端末では使えません。</p>
+        <p style="margin-top: 1.5em;">困ったときはページをリロード、またはログインし直してください。</p>
+        <button  class="app-btn"onclick="showScreen('homeScreen')">ホーム画面に戻る</button>
+    </div>
 
     <footer>
         <p>&copy;kokorog 2025 </p>
