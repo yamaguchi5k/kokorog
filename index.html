@@ -6,17 +6,19 @@
     <title>ココログ</title>
     <script src="kokorog.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <img src="images/back_top.jpeg" alt="上の装飾" class="bg-top">
     <header>
         <h1>ココログ</h1>
     </header>
 
     <!-- ログイン画面 -->
     <div id="loginScreen">
-        <h2>ココログへようこそ</h2>
-        <p>あなたのペースで、体調やできたことを残してみませんか？</p>
         <div class="hometext">
+            <h2>ココログへようこそ</h2>
+            <p>あなたのペースで、体調やできたことを残してみませんか？</p>
             <h3>自分の名前を選んでね</h3>
             <div id="userButtonList"></div>
 
@@ -42,7 +44,7 @@
         <div class="hometext">
             <h2>新規登録</h2>
             <p>登録したいお名前を入力してください</p>
-            <input type="text" id="newUserName" placeholder="名前を入力">
+            <input type="text" class="app-input" id="newUserName" placeholder="名前を入力">
             <br>
             <button class="app-btn" onclick="registerUser()">登録</button>
             <div id="registerMsg"></div>
@@ -85,16 +87,14 @@
                 <img src="images/smile.png" alt="にっこり" onclick="selectMood(this, 'にっこり', 'smile.png')" class="mood-icon">
                 <img src="images/neutral.png" alt="ふつう" onclick="selectMood(this, 'ふつう', 'neutral.png')" class="mood-icon">
                 <img src="images/sad.png" alt="しょんぼり" onclick="selectMood(this, 'しょんぼり', 'sad.png')" class="mood-icon">
-            <!-- <img src="images/smile.png" alt="にっこり" onclick="selectMood(this, '😊')" class="mood-icon">
-            <img src="images/neutral.png" alt="ふつう" onclick="selectMood(this, '😐')" class="mood-icon">
-            <img src="images/sad.png" alt="しょんぼり" onclick="selectMood(this, '😢')" class="mood-icon"> -->
             </div>
 
-            <textarea id="recordMemo" name="memo" placeholder="メモやできたことなどを入力してね"></textarea>
-            <br><br>
-            <button class="app-btn" onclick="saveRecord()">記録する</button>
-            <button class="app-btn" onclick="showPastRecords()">これまでの記録を見る</button>
-            <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+            <textarea class="app-textarea" id="recordMemo" name="memo" placeholder="メモやできたことなどを入力してね"></textarea>
+            <button class="app-btn record-btn" onclick="saveRecord()">記録する</button>
+            <div class="record-bottom-btns">
+                <button class="app-btn" onclick="showPastRecords()">これまでの記録を見る</button>
+                <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+            </div>
         </div>
     </div>
 
@@ -113,6 +113,13 @@
         <div class="hometext">
             <h2><span id="userWelcomePast"></span>さんの記録</h2>
             <div id="recordList"></div>
+            <div class="edit-form">
+                <textarea id="editMemo-1" class="edit-memo-textarea" rows="3">編集内容</textarea>
+                <div class="edit-btn-row">
+                    <button class="app-btn save-btn" onclick="saveEditedRecord(1)">保存</button>
+                    <button class="app-btn cancel-btn" onclick="cancelEdit(1)">キャンセル</button>
+                </div>
+            </div>
         <!-- 編集確認ポップアップ -->
             <div id="deletePopup" class="popup" style="display: none;">
                 <div class="popup-content">
@@ -153,8 +160,26 @@
         <button  class="app-btn"onclick="showScreen('homeScreen')">ホーム画面に戻る</button>
     </div>
 
+    <!-- ハンバーガーメニュー -->
+    <div id="menuToggle" class="humburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- メニュー本体 -->
+    <nav id="sideMenu" class="side-menu">
+        <ul>
+            <li><button onclick="showScreen('homeScreen')">ホーム</button></li>
+            <li><button onclick="showScreen('recordScreen')">記録する</button></li>
+            <li><button onclick="showPastRecords()">過去の記録を見る</button></li>
+            <li><button onclick="showScreen('helpScreen')">使い方</button></li>
+            <li><button onclick="goToLoginFromComplete()">ログアウト</button></li>
+        </ul>
+    </nav>
+
     <footer>
         <p>&copy;kokorog 2025 </p>
     </footer>
+    <img src="images/back_bottom.jpeg" alt="下の装飾" class="bg-bottom">
 </body>
 </html>

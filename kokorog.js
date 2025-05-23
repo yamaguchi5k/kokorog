@@ -224,11 +224,16 @@ function showPastRecords() {
             const memo = document.createElement("div");
             memo.className = "record-card-memo";
             memo.id = `memo-${record.index}`;
-            memo.innerHTML = editing
-                ? `<textarea id="editMemo-${record.index}" rows="3">${record.memo || ""}</textarea>
-                <button onclick="saveEditdRecord(${record.index})">保存</button>
-                <button onclick="cancelEdit(${record.index})">キャンセル</button>`
-                : (record.memo || "");
+            memo.innerHTML = `
+                <div class="edit-form">
+                    <textarea id="editMemo-${record.index}" class="edit-memo-textarea" rows="3">${record.memo || ""}</textarea>
+                    <div class="edit-btn-row">
+                        <button class="app-btn save-btn" onclick="saveEditdRecord(${record.index})">保存</button>
+                        <button class="app-btn cancel-btn" onclick="cancelEdit(${record.index})">キャンセル</button>
+                    </div>
+                </div>
+            `;
+
 
             // カードに追加
             card.appendChild(header);
@@ -264,6 +269,15 @@ function editRecord(idx) {
     localStorage.setItem("records", JSON.stringify(allRecords));
     showPastRecords();
 }
+// 編集フォーム
+memo.innerHTML = editing
+    ? `<textarea id="editMemo-${record.index}" rows="3" class="record-edit-memo">${record.memo || ""}</textarea>
+       <div class="edit-btns">
+           <button class="app-btn" onclick="saveEditdRecord(${record.index})">保存</button>
+           <button class="app-btn" onclick="cancelEdit(${record.index})">キャンセル</button>
+       </div>`
+    : (record.memo || "");
+    
 function cancelEdit(idx) {
     let allRecords = JSON.parse(localStorage.getItem("records")) || [];
     if (allRecords[idx]) delete allRecords[idx].editing;
@@ -293,3 +307,17 @@ function moveToHome() {
         showUserName(); // 名前表示
     }
 }
+
+
+// ハンバーガーメニュー開閉
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenu = document.getElementById('sideMenu');
+    menuToggle.addEventListener('click', function() {
+        sideMenu.classList.toggle('open');
+    });
+    // メニュー内ボタンを押したら自動で閉じる
+    sideMenu.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => sideMenu.classList.remove('open'));
+    });
+});
