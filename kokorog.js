@@ -1,3 +1,17 @@
+let currentUser = "";
+let selectedMoodImage = "";
+
+// ロゴをクリックするとログイン画面へ移動
+window.onload = function() {
+    document.getElementById('logoTitle').onclick = function() {
+        showScreen('loginScreen');
+    };
+    refreshUserList();
+    showScreen('loginScreen');
+}
+
+
+
 // 画面切り替え
 function showScreen(screenId) {
     const screens = [
@@ -23,8 +37,16 @@ function showScreen(screenId) {
         document.getElementById('userWelcomeRecord').textContent = currentUser;
         document.getElementById('userWelcomePast').textContent = currentUser;
     }
-}
 
+    // ハンバーガーメニューの表示切替
+    const menuToggle = document.getElementById('menuToggle');
+    if (['homeScreen', 'recordScreen', 'pastRecordScreen', 'helpScreen'].includes(screenId)) {
+        menuToggle.style.display = 'flex';
+    } else {
+        menuToggle.style.display = 'none';
+        document.getElementById('sideMenu').classList.remove('open');
+    }
+}
 
 
 // ログイン画面処理
@@ -32,7 +54,7 @@ function showScreen(screenId) {
 function refreshUserList() {
     // LocalStrageからユーザー名リストを取得
     const userList = JSON.parse(localStorage.getItem("userList")) || [];
-     const container = document.getElementById("userButtonList");
+    const container = document.getElementById("userButtonList");
     // 中身を空にしてから、今のユーザーリストを上書きする
     container.innerHTML = "";
 
@@ -189,7 +211,7 @@ function showPastRecords() {
         card.className = "record-card";
 
         // 編集状態判定
-        let editing = record.editing;
+        let editing = record.editing === true; // trueなら編集モード
 
         // 気分クラス
         let moodClass = '';
@@ -220,19 +242,23 @@ function showPastRecords() {
             const divider = document.createElement("div");
             divider.className = "record-card-divider";
 
-            // メモ (編集状態ならtextarea)
+            // ここで編集状態ならtextareaを表示、そうでなければ普通にメモを表示
             const memo = document.createElement("div");
             memo.className = "record-card-memo";
             memo.id = `memo-${record.index}`;
-            memo.innerHTML = `
-                <div class="edit-form">
-                    <textarea id="editMemo-${record.index}" class="edit-memo-textarea" rows="3">${record.memo || ""}</textarea>
-                    <div class="edit-btn-row">
+            if (record.editing === true) {
+                // 編集モード
+                memo.innerHTML = `
+                    <textarea id="editMemo-${record.index}" rows="3" class="record-edit-memo">${record.memo || ""}</textarea>
+                    <div class="edit-btns">
                         <button class="app-btn save-btn" onclick="saveEditdRecord(${record.index})">保存</button>
                         <button class="app-btn cancel-btn" onclick="cancelEdit(${record.index})">キャンセル</button>
                     </div>
-                </div>
-            `;
+                `;
+            } else {
+                // 通常表示
+                memo.textContent = record.memo || "";
+            }
 
 
             // カードに追加
@@ -265,32 +291,30 @@ function confirmDeleteRecord() {
 // 編集機能
 function editRecord(idx) {
     let allRecords = JSON.parse(localStorage.getItem("records")) || [];
-    if (allRecords[idx]) allRecords[idx].editing = true;
+    // まず全部のeditingをfalseにしてから、該当だけtrue
+    allRecords.forEach((r, i) => {
+        if (i === idx) r.editing = true;
+        else delete r.editing;
+    });
     localStorage.setItem("records", JSON.stringify(allRecords));
     showPastRecords();
 }
-// 編集フォーム
-memo.innerHTML = editing
-    ? `<textarea id="editMemo-${record.index}" rows="3" class="record-edit-memo">${record.memo || ""}</textarea>
-       <div class="edit-btns">
-           <button class="app-btn" onclick="saveEditdRecord(${record.index})">保存</button>
-           <button class="app-btn" onclick="cancelEdit(${record.index})">キャンセル</button>
-       </div>`
-    : (record.memo || "");
+
     
-function cancelEdit(idx) {
-    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
-    if (allRecords[idx]) delete allRecords[idx].editing;
-    localStorage.setItem("records", JSON.stringify(allRecords));
-    showPastRecords();
-}
+
 function saveEditdRecord(idx) {
     let allRecords = JSON.parse(localStorage.getItem("records")) || [];
     const newMemo = document.getElementById(`editMemo-${idx}`).value;
     if (allRecords[idx]) {
         allRecords[idx].memo = newMemo;
-        delete allRecords[idx].editing;
+        allRecords.forEach(r => delete r.editing); // 編集終了！
     }
+    localStorage.setItem("records", JSON.stringify(allRecords));
+    showPastRecords();
+}
+function cancelEdit(idx) {
+    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
+    allRecords.forEach(r => delete r.editing);
     localStorage.setItem("records", JSON.stringify(allRecords));
     showPastRecords();
 }

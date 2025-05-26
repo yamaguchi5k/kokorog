@@ -9,13 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <img src="images/back_top.jpeg" alt="上の装飾" class="bg-top">
     <header>
-        <h1>ココログ</h1>
+        <div class="image-header-wrap">
+            <img src="images/back_top.png" alt="上の装飾" class="bg-top">
+            <h1 id="logoTitle" class="logo-title" style="cursor: pointer;">ココログ</h1>
+            <img src="images/line_enogu7_brown.png" alt="ロゴ下の線" class="logo-underline">
+        </div>
     </header>
 
     <!-- ログイン画面 -->
     <div id="loginScreen">
+        <img src="images/desk.jpg" alt="デスクのイラスト" class="rogin-only-img">
         <div class="hometext">
             <h2>ココログへようこそ</h2>
             <p>あなたのペースで、体調やできたことを残してみませんか？</p>
@@ -47,6 +51,7 @@
             <input type="text" class="app-input" id="newUserName" placeholder="名前を入力">
             <br>
             <button class="app-btn" onclick="registerUser()">登録</button>
+            <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
             <div id="registerMsg"></div>
         </div>
     </div>
@@ -113,13 +118,7 @@
         <div class="hometext">
             <h2><span id="userWelcomePast"></span>さんの記録</h2>
             <div id="recordList"></div>
-            <div class="edit-form">
-                <textarea id="editMemo-1" class="edit-memo-textarea" rows="3">編集内容</textarea>
-                <div class="edit-btn-row">
-                    <button class="app-btn save-btn" onclick="saveEditedRecord(1)">保存</button>
-                    <button class="app-btn cancel-btn" onclick="cancelEdit(1)">キャンセル</button>
-                </div>
-            </div>
+
         <!-- 編集確認ポップアップ -->
             <div id="deletePopup" class="popup" style="display: none;">
                 <div class="popup-content">
@@ -161,7 +160,7 @@
     </div>
 
     <!-- ハンバーガーメニュー -->
-    <div id="menuToggle" class="humburger">
+    <div id="menuToggle" class="humburger" style="display: none;">
         <span></span>
         <span></span>
         <span></span>
@@ -177,9 +176,16 @@
         </ul>
     </nav>
 
-    <footer>
-        <p>&copy;kokorog 2025 </p>
-    </footer>
-    <img src="images/back_bottom.jpeg" alt="下の装飾" class="bg-bottom">
+    <!-- <div class="copyright-wrap">
+        <div class="copyright-text">
+            <p>&copy;kokorog 2025 </p>
+        </div>
+        <img src="images/back_bottom.png" alt="下の装飾" class="bg-bottom">
+    </div> -->
+    <div class="copyright-wrap">
+        <img src="images/back_bottom.png" alt="下の装飾" class="bg-bottom">
+        <div class="copyright-text">&copy;kokorog 2025</div>
+    </div>
+
 </body>
 </html>

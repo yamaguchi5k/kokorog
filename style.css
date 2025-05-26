@@ -25,6 +25,95 @@ body {
 }
 
 
+/* 上の装飾 */
+.image-header-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+    /* 画像サイズに応じて高さ調整する場合はheightを指定してもOK */
+}
+.bg-top {
+    width: 100%;
+    display: block;
+}
+.logo-title {
+    position: absolute;
+    left: 24px; /* 左端の位置 */
+    top: 30%;
+    transform: translateY(-50%);  /* -50%でちょうど「top」の位置が文字の真ん中 */
+    color: #654321;
+    font-size: 3em;
+    font-family: 'MyCustomFont', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px #fff, 0 2px 12px #ffc;
+    pointer-events: auto;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: left;
+}
+.logo-underline {
+    display: block;
+    margin: -8px 0 0 4px; /* ロゴとの間を詰めたい場合はmargin-topをマイナス調整 */
+    width: 80vw;
+    max-width: 600px;
+    height: auto;
+    /* left寄せにしたい場合は以下も */
+    margin-left: 0;
+}
+
+
+
+/* 下の装飾 */
+.copyright-wrap {
+  position: relative;
+  width: 100vw;
+  margin-top: 4em;
+  overflow: visible; /* 念のため */
+}
+.bg-bottom {
+  width: 100vw;
+  max-width: 100vw;
+  height: auto;   /* 高さ自動 */
+  display: block;
+  position: relative;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.copyright-text {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;  /* 画像下から30px */
+  transform: translateX(-50%);
+  z-index: 2;
+  color: #654321;
+  font-size: 1.2em;
+  background: transparent;
+  white-space: nowrap;
+}
+
+
+
+/* ログイン画面の画像 */
+.rogin-only-img {
+    display: block;
+    width: 100vw;        /* ビューポート幅ぴったり */
+    max-width: 100vw;
+    height: auto;
+    margin: 60px auto 0 auto;           /* 余白なし */
+    padding: 0;
+    /* ↓画面の左右ピッタリに揃える用（bodyに余白がある場合） */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+}
+.hometext h2 {
+    margin-top: 0;
+}
+
+
+
 /* ボタン設定 */
 .app-btn {
     width: 220px;
@@ -357,4 +446,11 @@ h1 {
     padding: 10px 0;
     color: #f93;
     cursor: pointer;
+}
+
+
+.copyright {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 6rem;
 }
