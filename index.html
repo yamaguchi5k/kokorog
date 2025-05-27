@@ -11,9 +11,11 @@
 <body>
     <header>
         <div class="image-header-wrap">
-            <img src="images/back_top.png" alt="上の装飾" class="bg-top">
-            <h1 id="logoTitle" class="logo-title" style="cursor: pointer;">ココログ</h1>
-            <img src="images/line_enogu7_brown.png" alt="ロゴ下の線" class="logo-underline">
+            <img src="images/back_topp.png" alt="上の装飾" class="bg-top">
+            <div class="logo-wrap">
+                <h1 id="logoTitle" class="logo-title" style="cursor: pointer;">ココログ</h1>
+                <img src="images/line_enogu7_brown.png" alt="ロゴ下の線" class="logo-underline">
+            </div>
         </div>
     </header>
 
@@ -26,7 +28,7 @@
             <h3>自分の名前を選んでね</h3>
             <div id="userButtonList"></div>
 
-            <p>新規登録はこちら</p>
+            <h3>新規登録はこちら</h3>
             <button class="app-btn" onclick="showScreen('registerScreen')">新規登録</button>
         </div>
     </div>
@@ -50,8 +52,8 @@
             <p>登録したいお名前を入力してください</p>
             <input type="text" class="app-input" id="newUserName" placeholder="名前を入力">
             <br>
-            <button class="app-btn" onclick="registerUser()">登録</button>
-            <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
+            <button class="app-btn" onclick="registerUser()" id="registerBtn">登録</button>
+            <button class="app-btn" onclick="goToLoginFromComplete()" id="backLoginBtn">ログイン画面へ戻る</button>
             <div id="registerMsg"></div>
         </div>
     </div>
@@ -95,7 +97,10 @@
             </div>
 
             <textarea class="app-textarea" id="recordMemo" name="memo" placeholder="メモやできたことなどを入力してね"></textarea>
-            <button class="app-btn record-btn" onclick="saveRecord()">記録する</button>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <button class="app-btn record-btn" onclick="saveRecord()">記録する</button>
+                <div id="recordErrorMsg" class="alert-msg"></div>
+            </div>
             <div class="record-bottom-btns">
                 <button class="app-btn" onclick="showPastRecords()">これまでの記録を見る</button>
                 <button class="app-btn" onclick="goToLoginFromComplete()">ログイン画面へ戻る</button>
@@ -123,8 +128,8 @@
             <div id="deletePopup" class="popup" style="display: none;">
                 <div class="popup-content">
                     <p>本当にこの記録を削除しますか？</p>
-                    <button id="confirmDeleteBtn">削除する</button>
-                    <button onclick="closeDeletePopup()">キャンセル</button>
+                    <button id="confirmDeleteBtn" class="app-btn">削除する</button>
+                    <button class="app-btn" onclick="closeDeletePopup()">キャンセル</button>
                 </div>
             </div>
             <button class="app-btn" onclick="showScreen('homeScreen')">ホーム画面へ戻る</button>
@@ -135,27 +140,27 @@
     <!-- 操作方法画面 -->
     <div id="helpScreen" style="display: none;">
         <h2>ココログの使い方</h2>
-        <h3>ホーム画面の操作</h3>
+        <h3 style="margin-top: 3em;"><img src="images/bunbougu_gabyou.png" alt="画鋲のイラスト" class="list-ikon">ホーム画面の操作<img src="images/bunbougu_gabyou.png" alt="画鋲のイラスト" class="list-ikon"></h3>
         <img src="ホーム画面のスクショ" alt="ホーム画面イメージ" style="width: 90%; max-width: 340px;">
         <ul>
             <li><b>記録する</b> … その日の気分やできたことを記録できます。</li>
             <li><b>これまでの記録を見る</b> … これまでの記録一覧を見ることができます。</li>
             <li><b>操作確認</b> … この画面 (使い方ガイド) をもう一度見ることができます。</li>
         </ul>
-        <h3>過去の記録画面の操作</h3>
+        <h3><img src="images/bunbougu_gabyou.png" alt="画鋲のイラスト" class="list-ikon">過去の記録画面の操作<img src="images/bunbougu_gabyou.png" alt="画鋲のイラスト" class="list-ikon"></h3>
         <img src="過去の記録画面のスクショ" alt="過去の記録画面イメージ" style="width: 90%; max-width: 340px;">
         <p style="margin-left: 2em;">気分マーク・日付・記録内容が表示されます。</p>
         <ul>
             <li>
-                <img src="images/trashbox.png" alt="削除" style="width: 20px; vertical-align: middle;">削除ボタン … いらない記録を削除できます。
+                <img src="images/trashbox.png" alt="削除" style="width: 20px; vertical-align: middle;"><b>削除ボタン</b> … いらない記録を削除できます。
             </li>
             <li>
-                <img src="images/pencil.png" alt="編集" style="width: 20px; vertical-align: middle;">編集ボタン … その場で記録内容を書き直せます。
+                <img src="images/pencil.png" alt="編集" style="width: 20px; vertical-align: middle;"><b>編集ボタン</b> … その場で記録内容を書き直せます。
             </li>
         </ul>
         <br>
-        <p style="margin-top: 1.5em;">データはこの端末だけに保存されます。他の端末では使えません。</p>
-        <p style="margin-top: 1.5em;">困ったときはページをリロード、またはログインし直してください。</p>
+        <p style="margin-top: 2em;"><img src="images/mark_chuui.png" alt="注意マーク" class="caution-ikon">データはこの端末だけに保存されます。他の端末では使えません。</p>
+        <p style="margin-bottom: 5em;"><img src="images/mark_chuui.png" alt="注意マーク" class="caution-ikon">困ったときはページをリロード、またはログインし直してください。</p>
         <button  class="app-btn"onclick="showScreen('homeScreen')">ホーム画面に戻る</button>
     </div>
 
@@ -171,17 +176,11 @@
             <li><button onclick="showScreen('homeScreen')">ホーム</button></li>
             <li><button onclick="showScreen('recordScreen')">記録する</button></li>
             <li><button onclick="showPastRecords()">過去の記録を見る</button></li>
-            <li><button onclick="showScreen('helpScreen')">使い方</button></li>
+            <li><button onclick="showScreen('helpScreen')">操作確認</button></li>
             <li><button onclick="goToLoginFromComplete()">ログアウト</button></li>
         </ul>
     </nav>
 
-    <!-- <div class="copyright-wrap">
-        <div class="copyright-text">
-            <p>&copy;kokorog 2025 </p>
-        </div>
-        <img src="images/back_bottom.png" alt="下の装飾" class="bg-bottom">
-    </div> -->
     <div class="copyright-wrap">
         <img src="images/back_bottom.png" alt="下の装飾" class="bg-bottom">
         <div class="copyright-text">&copy;kokorog 2025</div>

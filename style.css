@@ -30,36 +30,55 @@ body {
     position: relative;
     width: 100%;
     max-width: 100vw;
-    /* 画像サイズに応じて高さ調整する場合はheightを指定してもOK */
+    height: 350px;
 }
+
 .bg-top {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
-}
-.logo-title {
     position: absolute;
-    left: 24px; /* 左端の位置 */
-    top: 30%;
-    transform: translateY(-50%);  /* -50%でちょうど「top」の位置が文字の真ん中 */
-    color: #654321;
-    font-size: 3em;
+    top: 0; left: 0;
+    z-index: 1;
+}
+
+/* h1と線を重ねて配置するためのラップ */
+.logo-wrap {
+    position: absolute;
+    top: 30px; /* 装飾画像の中でh1をどこに置くか */
+    left: 28px; /* 左からの距離（h1を左寄せ） */
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* h1と線を左寄せ */
+    width: auto;
+}
+
+.logo-title {
+    font-size: 4em;
     font-family: 'MyCustomFont', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
     font-weight: bold;
+    color: #654321;
     text-shadow: 2px 2px 6px #fff, 0 2px 12px #ffc;
-    pointer-events: auto;
-    cursor: pointer;
-    white-space: nowrap;
-    text-align: left;
+    margin-bottom: -6px; /* 線画像とh1の隙間を詰める */
+    background: transparent;
+    position: static;
+    left: 0;
+    top: 0;
+    transform: none;
 }
+
 .logo-underline {
-    display: block;
-    margin: -8px 0 0 4px; /* ロゴとの間を詰めたい場合はmargin-topをマイナス調整 */
-    width: 80vw;
-    max-width: 600px;
+    width: 300px;
+    max-width: 70vw;
     height: auto;
-    /* left寄せにしたい場合は以下も */
-    margin-left: 0;
+    display: block;
+    margin-left: -20px; /* 左端に合わせる */
+    margin-top: 0;
+    z-index: 3;
 }
+
 
 
 
@@ -73,7 +92,7 @@ body {
 .bg-bottom {
   width: 100vw;
   max-width: 100vw;
-  height: auto;   /* 高さ自動 */
+  height: auto; /* 高さ自動 */
   display: block;
   position: relative;
   left: 0;
@@ -83,7 +102,7 @@ body {
 .copyright-text {
   position: absolute;
   left: 50%;
-  bottom: 30px;  /* 画像下から30px */
+  bottom: 30px; /* 画像下から30px */
   transform: translateX(-50%);
   z-index: 2;
   color: #654321;
@@ -94,22 +113,38 @@ body {
 
 
 
+/* 新規登録画面のボタン配置 */
+#registerBtn {
+    display: block;
+    margin: 0 auto 28px auto;
+    width: 220px;
+}
+#backLoginBtn {
+    display: block;
+    margin: 30px auto 10px auto;
+    width: 220px;
+}
+
+
+
 /* ログイン画面の画像 */
 .rogin-only-img {
     display: block;
-    width: 100vw;        /* ビューポート幅ぴったり */
+    width: 100vw; /* ビューポート幅ぴったり */
     max-width: 100vw;
     height: auto;
-    margin: 60px auto 0 auto;           /* 余白なし */
+    margin: 20px auto 0 auto; /* 余白なし */
     padding: 0;
-    /* ↓画面の左右ピッタリに揃える用（bodyに余白がある場合） */
-    position: relative;
+    position: relative; /* 画面の左右ピッタリに揃える用（bodyに余白がある場合） */
     left: 50%;
     right: 50%;
     transform: translateX(-50%);
 }
 .hometext h2 {
-    margin-top: 0;
+    margin-top: -20px;
+}
+.hometext h3 {
+    margin-top: 70px;
 }
 
 
@@ -219,6 +254,16 @@ h1 {
     background-color: #90caf9;
 }
 
+/* 記録画面アラート設定 */
+.alert-msg {
+    color: #ff6347;
+    font-weight: bold;
+    margin-top: -20px;
+    min-height: 1.2em; /* ないときも高さが確保されて位置がずれにくい */
+    text-align: center;
+}
+
+
 
 /* 記録完了ポップ */
 .popup {
@@ -285,27 +330,28 @@ h1 {
 }
 
 .mood-smile {
-    background: #fffde7;
+    background: #eaffd6;
     border-radius: 50%;
     padding: 2px;
 }
 .mood-neutral {
-    background: #e3f2fd;
+    background: #ffffd6;
     border-radius: 50%;
     padding: 2px;
 }
 .mood-sad {
-    background: #eeeeee;
+    background: #ffd6d6;
     border-radius: 50%;
     padding: 2px;
 }
 
 .record-btn {
-    margin-bottom: 100px;
+    margin-bottom: 30px;
 }
 .record-bottom-btns {
     display: flex;
     flex-direction: column;
+    margin-top: 100px;
     gap: 16px; /* ボタン同士の間隔 */
     align-items: center;
 }
@@ -395,6 +441,57 @@ h1 {
 }
 
 
+/* 操作案内画像設定 */
+.list-ikon {
+    height: 1.2em;
+    vertical-align: middle;
+    margin-right: 0.3em;
+    margin-left: 0.3em;
+}
+.caution-ikon {
+    height: 1.2em;
+    vertical-align: middle;
+    margin-right: 0.3em; 
+}
+/* 操作案内画面 */
+#helpScreen {
+    margin: 0 auto;
+    max-width: 650px;
+    text-align: center;
+    padding: 32px 12px 0 12px;
+    box-sizing: border-box;
+}
+#helpScreen ul {
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto 16px auto;
+    padding-left: 2em;
+}
+
+
+
+#helpScreen h2 {
+  position: relative;
+  background: #f9c89b;
+  box-shadow: 0px 0px 0px 5px #f9c89b;
+  border: dashed 2px white;
+  padding: 0.2em 0.5em;
+  color: #454545;
+}
+
+#helpScreen h2:after {
+  position: absolute;
+  content: '';
+  left: -7px;
+  top: -7px;
+  border-width: 0 0 15px 15px;
+  border-style: solid;
+  border-color: #fff #fff #f39800;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+
+
 /* ハンバーガーアイコン */
 .humburger {
     width: 36px;
@@ -444,8 +541,12 @@ h1 {
     font-size: 1.1em;
     width: 100%;
     padding: 10px 0;
-    color: #f93;
+    color: #e80;
     cursor: pointer;
+}
+.side-menu button:hover {
+    background-color: #ffe0b2;
+    color: #654321;
 }
 
 

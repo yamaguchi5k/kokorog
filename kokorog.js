@@ -70,11 +70,6 @@ function refreshUserList() {
     });
 }
 
-// ページが表示されたら、最初にユーザー一覧を表示する
-window.onload = function() {
-    refreshUserList();
-    showScreen('loginScreen');
-}
 
 
 // 新規登録処理
@@ -82,14 +77,20 @@ function registerUser() {
     // 入力された名前を取得
     const name = document.getElementById("newUserName").value.trim();
     if (!name) {
-        document.getElementById(`registerMsg`).textContent = "お名前を入力してください";
+        const msg = document.getElementById(`registerMsg`);
+        msg.textContent = "お名前を入力してください";
+        msg.style.color = "#ff6347";
+        msg.style.fontWeight = "bold";
         return;
     }
     // ユーザーリストをLocalStrageから取得、または初期化
     let userList = JSON.parse(localStorage.getItem("userList")) || []
     // 重複チェック
     if (userList.includes(name)) {
-        document.getElementById(`registerMsg`).textContent = "このユーザー名はすでに登録されています";
+        const msg = document.getElementById(`registerMsg`);
+        msg.textContent = "このユーザー名はすでに登録されています";
+        msg.style.color = "#ff6347";
+        msg.style.fontWeight = "bold";
         return;
     }
     // リストに追加して保存
@@ -142,11 +143,16 @@ function selectMood(elem, mood, moodImage) {
 // 記録保存処理
 function saveRecord() {
     const memo = document.getElementById("recordMemo").value.trim(); // 入力されたメモを取得(空白は除去)
+    const errorMsgElem = document.getElementById("recordErrorMsg");
+    errorMsgElem.textContent = "";
     if (!selectedMood && !memo) {
-        alert("気分かメモ、どちらかは記録してください");
+        errorMsgElem.textContent = "気分かメモ、どちらかは記録してください";
         return;
     }
 
+    //記録成功時はエラーメッセージを消す
+    errorMsgElem.textContent = "";
+    
     // 既存の記録を取得
     const allRecords = JSON.parse(localStorage.getItem("records")) || []; // 保存済みの記録一覧を取り出す(なければ空の配列)
 
