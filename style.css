@@ -5,14 +5,22 @@
     font-style: normal;
 }
 
+html {
+    font-size: 19px;
+}
+
 body {
     font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-size: 1.08em;
     background-color: #fffaf0;
 }
 
 .hometext {
     margin-top: 100px;
     text-align: center;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #userButtonList {
     display: flex;
@@ -56,7 +64,7 @@ body {
 }
 
 .logo-title {
-    font-size: 4em;
+    font-size: 3em;
     font-family: 'MyCustomFont', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
     font-weight: bold;
     color: #654321;
@@ -151,8 +159,7 @@ body {
 
 /* ボタン設定 */
 .app-btn {
-    width: 220px;
-    height: 48px;
+    width: 280px;
     white-space: nowrap; /* 1行で表示 */
     padding: 12px 0;
     margin: 6px 0;
@@ -456,7 +463,7 @@ h1 {
 /* 操作案内画面 */
 #helpScreen {
     margin: 0 auto;
-    max-width: 650px;
+    max-width: 900px;
     text-align: center;
     padding: 32px 12px 0 12px;
     box-sizing: border-box;
@@ -508,7 +515,7 @@ h1 {
 .humburger span {
     display: block;
     height: 5px;
-    background: #f93;
+    background: #800000;
     border-radius: 2px;
     transition: 0.3s;
 }
@@ -554,4 +561,12 @@ h1 {
     text-align: center;
     padding: 2rem 0;
     margin-top: 6rem;
+}
+
+
+/* スマホサイズ */
+@media (max-width: 400px) {
+  .hometext, #helpScreen { max-width: 98vw; }
+  html { font-size: 15px;  /* スマホ表示では全体の基準フォントサイズを少し小さく */ }
+  body { font-size: 0.97em; }
 }
