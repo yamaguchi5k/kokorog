@@ -36,9 +36,9 @@
    ```bash
    git clone https://github.com/yamaguchi5k/kokolog.git
 
-2. **index.html をダブルクリック**
-  ダウンロードしたフォルダ内の index.html をダブルクリックして開くだけでOKです。（サーバ不要）
-  ※画像やCSSが正しく表示されない場合は、同じフォルダ構成で開いてください。
+2. **index.html をダブルクリック**  
+   ダウンロードしたフォルダ内の index.html をダブルクリックして開くだけでOKです。（サーバ不要）  
+   ※画像やCSSが正しく表示されない場合は、同じフォルダ構成で開いてください。
 
 
 
