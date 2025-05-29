@@ -34,7 +34,7 @@
 
 1. **このリポジトリをダウンロードまたはクローンします。**
    ```bash
-   git clone https://github.com/yamaguchi5k/kokolog.git
+   git clone https://github.com/yamaguchi5k/kokorog
 
 2. **index.html をダブルクリック**  
    ダウンロードしたフォルダ内の index.html をダブルクリックして開くだけでOKです。（サーバ不要）  
