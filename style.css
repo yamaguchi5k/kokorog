@@ -337,12 +337,12 @@ h1 {
 }
 
 .mood-smile {
-    background: #eaffd6;
+    background: #d3ffa8;
     border-radius: 50%;
     padding: 2px;
 }
 .mood-neutral {
-    background: #ffffd6;
+    background: #ffffa3;
     border-radius: 50%;
     padding: 2px;
 }
@@ -446,6 +446,7 @@ h1 {
     vertical-align: middle;
     pointer-events: none;
 }
+
 
 
 /* 操作案内画像設定 */

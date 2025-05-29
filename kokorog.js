@@ -66,7 +66,27 @@ function refreshUserList() {
         btn.className = "app-btn";
         btn.onclick = function() { loginWithUser(name); };
         // 作ったボタンをログイン画面のdivに追加する
-        container.appendChild(btn);
+        btn.style.marginRight = "12px";
+
+        // 削除ボタン
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "icon-btn";
+        deleteBtn.title = "ユーザー削除";
+        deleteBtn.innerHTML = `<img src="images/trashbox.png" alt="削除">`;
+        deleteBtn.onclick = function(e) {
+            e.stopPropagation();
+            openDeleteUserPopup(name);
+        };
+
+        // 横並びラッパー
+        const wrap = document.createElement("div");
+        wrap.style.display = "flex";
+        wrap.style.alignItems = "center";
+        wrap.style.marginBottom = "10px";
+        wrap.appendChild(btn);
+        wrap.appendChild(deleteBtn);
+
+        container.appendChild(wrap);
     });
 }
 
@@ -293,6 +313,33 @@ function confirmDeleteRecord() {
     closeDeletePopup();
     showPastRecords();
 }
+
+// ユーザーリスト削除
+let deleteTargetUser = "";
+
+function openDeleteUserPopup(name) {
+    deleteTargetUser = name;
+    document.getElementById('deleteUserPopup').style.display = 'flex';
+    document.getElementById('confirmUserDeleteBtn').onclick = confirmDeleteUser;
+}
+function closeDeleteUserPopup() {
+    document.getElementById('deleteUserPopup').style.display = 'none';
+    deleteTargetUser = "";
+}
+function confirmDeleteUser() {
+    let userList = JSON.parse(localStorage.getItem("userList")) || [];
+    userList = userList.filter(u => u !== deleteTargetUser);
+    localStorage.setItem("userList", JSON.stringify(userList));
+    // そのユーザーの記録も消す場合
+    let allRecords = JSON.parse(localStorage.getItem("records")) || [];
+    allRecords = allRecords.filter(r => r.user !== deleteTargetUser);
+    localStorage.setItem("records", JSON.stringify(allRecords));
+
+    closeDeleteUserPopup();
+    refreshUserList();
+}
+
+
 
 // 編集機能
 function editRecord(idx) {
